@@ -51,6 +51,10 @@
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
@@ -59,6 +63,40 @@
       <a href="#hero" class="nav__wordmark">ÄNGLALJUS</a>
 
       <div class="nav__actions">
+        <button
+          class="theme-toggle sound-toggle"
+          id="sound-toggle"
+          aria-label="Slå på stämningsljud"
+          aria-pressed="false"
+        >
+          <svg
+            class="sound-toggle__icon sound-toggle__icon--off"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M11 5 6 9H2v6h4l5 4V5z" />
+            <path d="m23 9-6 6M17 9l6 6" />
+          </svg>
+          <svg
+            class="sound-toggle__icon sound-toggle__icon--on"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M11 5 6 9H2v6h4l5 4V5z" />
+            <path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14" />
+          </svg>
+        </button>
+
         <button
           class="theme-toggle"
           id="theme-toggle"
@@ -130,8 +168,13 @@
           >
         </li>
         <li class="menu__item">
+          <a href="#presentkort" class="menu__link"
+            ><span class="menu__num">05</span>Presentkort</a
+          >
+        </li>
+        <li class="menu__item">
           <a href="#kontakt" class="menu__link"
-            ><span class="menu__num">05</span>Kontakt</a
+            ><span class="menu__num">06</span>Kontakt</a
           >
         </li>
       </ul>
@@ -155,6 +198,12 @@
           </video>
           <div class="hero__scrim"></div>
         </div>
+
+        <canvas
+          class="hero__particles"
+          id="hero-particles"
+          aria-hidden="true"
+        ></canvas>
 
         <div class="hero__content">
           <p class="eyebrow eyebrow--light" data-reveal>
@@ -251,6 +300,9 @@
                   flöda fritt. Du ligger ner, ombonad och trygg, i 60 minuter.
                 </p>
                 <p class="service__price">Från 650 kr</p>
+                <button class="service__book" data-book-service="Änglahealing · 60 min · 650 kr">
+                  Boka &rarr;
+                </button>
               </div>
             </article>
 
@@ -269,6 +321,9 @@
                   närvaro. Naturnära, kravlöst och öppet för nybörjare.
                 </p>
                 <p class="service__price">Från 250 kr</p>
+                <button class="service__book" data-book-service="Meditation &amp; andning · 75 min · 250 kr">
+                  Boka &rarr;
+                </button>
               </div>
             </article>
 
@@ -287,6 +342,9 @@
                   relationer eller det som känns oklart. I lugn och förtrolighet.
                 </p>
                 <p class="service__price">Från 850 kr</p>
+                <button class="service__book" data-book-service="Medial vägledning · 60 min · 850 kr">
+                  Boka &rarr;
+                </button>
               </div>
             </article>
           </div>
@@ -429,52 +487,239 @@
             </h2>
           </div>
 
-          <div class="quotes">
-            <figure class="quote" data-reveal>
-              <blockquote class="quote__text">
-                &rdquo;Efter varje session hos Lars känner jag mig som en ny
-                människa. Det är svårt att sätta ord på &mdash; men lugnet
-                sitter i flera dagar.&rdquo;
-              </blockquote>
-              <figcaption class="quote__who">
-                <img
-                  src="img/png/rosa.jpg"
-                  alt="Porträtt av Rosa"
-                  class="quote__avatar"
-                  loading="lazy"
-                />
-                <span>
-                  <span class="quote__name">Rosa G.</span>
-                  <span class="quote__role">Änglahealing, återkommande</span>
-                </span>
-              </figcaption>
-            </figure>
+          <div class="swiper quotes-swiper" data-reveal>
+            <div class="swiper-wrapper">
+              <figure class="quote swiper-slide">
+                <blockquote class="quote__text">
+                  &rdquo;Efter varje session hos Lars känner jag mig som en ny
+                  människa. Det är svårt att sätta ord på &mdash; men lugnet
+                  sitter i flera dagar.&rdquo;
+                </blockquote>
+                <figcaption class="quote__who">
+                  <img
+                    src="img/png/rosa.jpg"
+                    alt="Porträtt av Rosa"
+                    class="quote__avatar"
+                    loading="lazy"
+                  />
+                  <span>
+                    <span class="quote__name">Rosa G.</span>
+                    <span class="quote__role">Änglahealing, återkommande</span>
+                  </span>
+                </figcaption>
+              </figure>
 
-            <figure class="quote" data-reveal data-reveal-delay="150">
-              <blockquote class="quote__text">
-                &rdquo;Jag kom som skeptiker och gick därifrån med något jag
-                inte visste att jag saknade. Meditationerna är nu min fasta
-                punkt i veckan.&rdquo;
-              </blockquote>
-              <figcaption class="quote__who">
-                <img
-                  src="img/png/vikinggirl.jpg"
-                  alt="Porträtt av Freja"
-                  class="quote__avatar"
-                  loading="lazy"
-                />
-                <span>
-                  <span class="quote__name">Freja L.</span>
-                  <span class="quote__role">Meditation &amp; andning</span>
-                </span>
-              </figcaption>
-            </figure>
+              <figure class="quote swiper-slide">
+                <blockquote class="quote__text">
+                  &rdquo;Jag kom som skeptiker och gick därifrån med något jag
+                  inte visste att jag saknade. Meditationerna är nu min fasta
+                  punkt i veckan.&rdquo;
+                </blockquote>
+                <figcaption class="quote__who">
+                  <img
+                    src="img/png/vikinggirl.jpg"
+                    alt="Porträtt av Freja"
+                    class="quote__avatar"
+                    loading="lazy"
+                  />
+                  <span>
+                    <span class="quote__name">Freja L.</span>
+                    <span class="quote__role">Meditation &amp; andning</span>
+                  </span>
+                </figcaption>
+              </figure>
+
+              <figure class="quote swiper-slide">
+                <blockquote class="quote__text">
+                  &rdquo;Samtalet gav mig svar på sådant jag burit på i åratal.
+                  Lars är varm, jordnära och helt utan flum.&rdquo;
+                </blockquote>
+                <figcaption class="quote__who">
+                  <span class="quote__avatar quote__avatar--mono">MS</span>
+                  <span>
+                    <span class="quote__name">Maria S.</span>
+                    <span class="quote__role">Medial vägledning</span>
+                  </span>
+                </figcaption>
+              </figure>
+
+              <figure class="quote swiper-slide">
+                <blockquote class="quote__text">
+                  &rdquo;Min fru släpade med mig hit. Jag är fortfarande inte
+                  säker på vad som hände &mdash; men jag har aldrig sovit så
+                  gott som natten efter.&rdquo;
+                </blockquote>
+                <figcaption class="quote__who">
+                  <span class="quote__avatar quote__avatar--mono">AP</span>
+                  <span>
+                    <span class="quote__name">Anders P.</span>
+                    <span class="quote__role">Änglahealing</span>
+                  </span>
+                </figcaption>
+              </figure>
+
+              <figure class="quote swiper-slide">
+                <blockquote class="quote__text">
+                  &rdquo;Gav bort ett presentkort till min mamma. Hon ringde
+                  efteråt och grät av glädje &mdash; bästa presenten jag
+                  någonsin gett.&rdquo;
+                </blockquote>
+                <figcaption class="quote__who">
+                  <span class="quote__avatar quote__avatar--mono">EK</span>
+                  <span>
+                    <span class="quote__name">Elin K.</span>
+                    <span class="quote__role">Presentkort</span>
+                  </span>
+                </figcaption>
+              </figure>
+
+              <figure class="quote swiper-slide">
+                <blockquote class="quote__text">
+                  &rdquo;Trodde inte att vägledning på distans skulle fungera,
+                  men det kändes som att sitta i samma rum. Varmt
+                  rekommenderas.&rdquo;
+                </blockquote>
+                <figcaption class="quote__who">
+                  <span class="quote__avatar quote__avatar--mono">SW</span>
+                  <span>
+                    <span class="quote__name">Sofia W.</span>
+                    <span class="quote__role">Vägledning på distans</span>
+                  </span>
+                </figcaption>
+              </figure>
+            </div>
+            <div class="swiper-pagination"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ PRESENTKORT ============ -->
+      <section class="section gift" id="presentkort">
+        <div class="container gift__grid">
+          <div class="gift__text">
+            <p class="eyebrow eyebrow--light" data-reveal>Presentkort</p>
+            <h2 class="heading-2 heading-2--light" data-reveal data-reveal-delay="80">
+              Ge bort en stund av ro
+            </h2>
+            <p class="gift__intro" data-reveal data-reveal-delay="160">
+              Ibland är den finaste gåvan inte ett ting, utan en paus. Ett
+              presentkort gäller i tolv månader och kan användas till alla
+              tjänster &mdash; healing, meditation eller vägledning.
+            </p>
+            <div class="choice-row" id="gift-amounts" data-reveal data-reveal-delay="220">
+              <button class="chip chip--light is-selected" data-amount="450 kr">
+                450 kr
+              </button>
+              <button class="chip chip--light" data-amount="650 kr">650 kr</button>
+              <button class="chip chip--light" data-amount="850 kr">850 kr</button>
+              <button class="chip chip--light" data-amount="1 000 kr">
+                1 000 kr
+              </button>
+            </div>
+            <button class="btn btn--light" id="gift-buy" data-reveal data-reveal-delay="260">
+              Ge bort
+            </button>
+          </div>
+
+          <div class="gift-card" data-reveal data-reveal-delay="150" aria-hidden="true">
+            <span class="gift-card__frame"></span>
+            <span class="gift-card__brand">ÄNGLALJUS</span>
+            <span class="gift-card__label">Presentkort</span>
+            <span class="gift-card__amount" id="gift-amount">450 kr</span>
+            <span class="gift-card__star">&#10022;</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ VANLIGA FRÅGOR ============ -->
+      <section class="section section--tinted" id="faq">
+        <div class="container">
+          <div class="section__head">
+            <p class="eyebrow" data-reveal>Vanliga frågor</p>
+            <h2 class="heading-2" data-reveal data-reveal-delay="80">
+              Undrar du något?
+            </h2>
+          </div>
+
+          <div class="faq" data-reveal data-reveal-delay="150">
+            <div class="faq__item">
+              <button class="faq__q" aria-expanded="false">
+                Behöver jag tro på änglar för att komma hit?
+                <span class="faq__icon" aria-hidden="true">+</span>
+              </button>
+              <div class="faq__a">
+                <p>
+                  Nej. Många som kommer hit är nyfikna, sökande eller bara
+                  trötta och i behov av vila. Du behöver inte tro på någonting
+                  särskilt &mdash; det räcker att du vill ge dig själv en lugn
+                  stund. Orden och bilderna är ett språk, inte ett krav.
+                </p>
+              </div>
+            </div>
+
+            <div class="faq__item">
+              <button class="faq__q" aria-expanded="false">
+                Vad händer under en healing-session?
+                <span class="faq__icon" aria-hidden="true">+</span>
+              </button>
+              <div class="faq__a">
+                <p>
+                  Vi börjar med ett kort samtal om hur du mår och vad du önskar.
+                  Sedan ligger du bekvämt, påklädd och ombonad, medan jag
+                  arbetar med varsam beröring och närvaro. De flesta upplever
+                  djup avslappning &mdash; en del somnar, och det är helt okej.
+                </p>
+              </div>
+            </div>
+
+            <div class="faq__item">
+              <button class="faq__q" aria-expanded="false">
+                Kan vägledning ske på distans?
+                <span class="faq__icon" aria-hidden="true">+</span>
+              </button>
+              <div class="faq__a">
+                <p>
+                  Ja. Medial vägledning fungerar lika bra via videosamtal, och
+                  många föredrar att sitta i sin egen trygga miljö. Du bokar på
+                  samma sätt och får en länk innan samtalet.
+                </p>
+              </div>
+            </div>
+
+            <div class="faq__item">
+              <button class="faq__q" aria-expanded="false">
+                Hur förbereder jag mig inför ett besök?
+                <span class="faq__icon" aria-hidden="true">+</span>
+              </button>
+              <div class="faq__a">
+                <p>
+                  Du behöver inte förbereda något alls. Kom i bekväma kläder,
+                  gärna utan stark parfym. Har du en fråga eller ett tema du
+                  vill utforska får du gärna bära den med dig &mdash; men det
+                  går lika bra att bara komma som du är.
+                </p>
+              </div>
+            </div>
+
+            <div class="faq__item">
+              <button class="faq__q" aria-expanded="false">
+                Vad gäller vid avbokning?
+                <span class="faq__icon" aria-hidden="true">+</span>
+              </button>
+              <div class="faq__a">
+                <p>
+                  Avboka gärna senast 24 timmar innan din tid, så kan någon
+                  annan få den. Vid sen avbokning debiteras halva priset.
+                  Introsamtalet är alltid kostnadsfritt och kravlöst.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       <!-- ============ KONTAKT ============ -->
-      <section class="section section--tinted" id="kontakt">
+      <section class="section" id="kontakt">
         <div class="container kontakt__grid">
           <div class="kontakt__text">
             <p class="eyebrow" data-reveal>Kontakt</p>
@@ -530,10 +775,32 @@
     <!-- ============ FOOTER ============ -->
     <footer class="footer">
       <p class="footer__wordmark">ÄNGLALJUS</p>
+      <p class="footer__moon" id="moon"></p>
+
+      <form class="footer__news" id="news-form">
+        <label class="footer__news-label" for="news-email"
+          >Månadens meditation &mdash; direkt i din inkorg</label
+        >
+        <div class="footer__news-row">
+          <input
+            type="email"
+            id="news-email"
+            class="footer__news-input"
+            placeholder="Din e-postadress"
+            autocomplete="email"
+            required
+          />
+          <button type="submit" class="btn btn--ghost footer__news-btn">
+            Prenumerera
+          </button>
+        </div>
+      </form>
+
       <ul class="footer__nav">
         <li><a href="#filosofi" class="footer__link">Filosofi</a></li>
         <li><a href="#tjanster" class="footer__link">Tjänster</a></li>
         <li><a href="#anglakort" class="footer__link">Änglakorten</a></li>
+        <li><a href="#presentkort" class="footer__link">Presentkort</a></li>
         <li><a href="#kontakt" class="footer__link">Kontakt</a></li>
       </ul>
       <p class="footer__legal">
@@ -541,6 +808,102 @@
         AI-genererade (Midjourney) samt Pexels (Tara Winstead, Mikhail Nilov).
       </p>
     </footer>
+
+    <!-- ============ BOKNINGSMODAL (demo — Calendly/Cal.com i skarp drift) ============ -->
+    <div class="modal" id="booking-modal" hidden>
+      <div class="modal__overlay" data-modal-close></div>
+      <div
+        class="modal__card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="booking-title"
+      >
+        <button class="modal__close" aria-label="Stäng" data-modal-close>
+          &times;
+        </button>
+        <p class="eyebrow">Bokning</p>
+        <h3 class="modal__title" id="booking-title">Boka ett samtal</h3>
+
+        <div class="modal__step" data-step="1">
+          <p class="modal__label">1. Vad söker du?</p>
+          <div class="choice-grid" id="booking-services">
+            <button
+              class="choice"
+              data-service="Introsamtal · 15 min · Kostnadsfritt"
+            >
+              Introsamtal<span>15 min &middot; Kostnadsfritt</span>
+            </button>
+            <button class="choice" data-service="Änglahealing · 60 min · 650 kr">
+              Änglahealing<span>60 min &middot; 650 kr</span>
+            </button>
+            <button
+              class="choice"
+              data-service="Meditation & andning · 75 min · 250 kr"
+            >
+              Meditation<span>75 min &middot; 250 kr</span>
+            </button>
+            <button
+              class="choice"
+              data-service="Medial vägledning · 60 min · 850 kr"
+            >
+              Medial vägledning<span>60 min &middot; 850 kr</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="modal__step" data-step="2" hidden>
+          <p class="modal__label">2. Välj dag</p>
+          <div class="choice-row" id="booking-days"></div>
+          <p class="modal__label">&hellip;och tid</p>
+          <div class="choice-row" id="booking-times"></div>
+        </div>
+
+        <div class="modal__step" data-step="3" hidden>
+          <p class="modal__label">3. Dina uppgifter</p>
+          <form id="booking-form">
+            <div class="form__group">
+              <label class="form__label" for="b-name">Namn</label>
+              <input
+                class="form__input"
+                id="b-name"
+                type="text"
+                autocomplete="name"
+                required
+              />
+            </div>
+            <div class="form__group">
+              <label class="form__label" for="b-email">E-post</label>
+              <input
+                class="form__input"
+                id="b-email"
+                type="email"
+                autocomplete="email"
+                required
+              />
+            </div>
+            <p class="modal__summary" id="booking-summary"></p>
+            <button type="submit" class="btn btn--dark">
+              Bekräfta bokning
+            </button>
+          </form>
+        </div>
+
+        <div class="modal__step modal__step--done" data-step="4" hidden>
+          <span class="modal__star" aria-hidden="true">&#10022;</span>
+          <h4 class="modal__done-title">Din tid är reserverad</h4>
+          <p class="modal__confirm" id="booking-confirm-text"></p>
+          <p class="modal__note">
+            Detta är en demo &mdash; i skarp drift sköts bokningen av Calendly
+            eller Cal.com.
+          </p>
+          <button class="btn btn--dark" data-modal-close>Stäng</button>
+        </div>
+
+        <button class="modal__back" id="booking-back" hidden>
+          &larr; Tillbaka
+        </button>
+      </div>
+    </div>
 
     <!-- ============ EFFEKTVÄLJARE ============ -->
     <div class="perf" id="perf">
@@ -583,6 +946,10 @@
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="js/main.js"></script>
+    <!-- apikey.js är gitignorad och kan saknas — då kör Selma offline-läge -->
+    <script src="js/apikey.js"></script>
+    <script src="js/chat.js"></script>
   </body>
 </html>

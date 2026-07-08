@@ -30,13 +30,45 @@ LALilaTech/
 
 | # | Sektion | Innehåll |
 |---|---|---|
-| 1 | `#hero` | Fullskärms-video (strand) + scrim + eyebrow + Cormorant-titel + CTA |
+| 1 | `#hero` | Fullskärms-video + scrim + **ljuspartiklar (canvas, endast Cinematic)** + CTA |
 | 2 | `#filosofi` | Text + kollage med tre överlappande änglabilder |
-| 3 | `#tjanster` | 3 tjänstekort (bild, titel, text, "Från X kr") |
-| 4 | `#anglakort` | **Dra ett änglakort** — 3 klick-vändbara kort (Frid/Mod/Hopp) + "Blanda om" |
-| 5 | `#roster` | 2 citatkort med avatarer |
-| 6 | `#kontakt` | Formulär + bokningsknapp (demo — toast; i produktion: Calendly/Cal.com) |
-| 7 | Footer | Wordmark, länkar, attribution |
+| 3 | `#tjanster` | 3 tjänstekort (bild, titel, text, "Från X kr", "Boka →" öppnar modalen) |
+| 4 | `#anglakort` | **Dra ett änglakort** — 3 klick-vändbara kort, kortlek på 9 budskap som slumpas, "Blanda om" delar nya |
+| 5 | `#roster` | 6 kundröster i **Swiper-karusell** (autoplay 6,5 s, av i Essential; grid-fallback utan CDN) |
+| 6 | `#presentkort` | "Ge bort en stund av ro" — beloppschips + live-förhandsvisning av kort med guldram (Stripe Checkout i skarp drift) |
+| 7 | `#faq` | Accordion med 5 vanliga frågor (max-height-transition, aria-expanded) |
+| 8 | `#kontakt` | Formulär + "Boka ett samtal" (öppnar bokningsmodalen) |
+| 9 | Footer | Wordmark, **månfas** (beräknas i JS), nyhetsbrevs-stub, länkar, attribution |
+
+## AI-chatten Selma (`js/chat.js`)
+
+Flytande knapp nere till höger (effektväljaren flyttade till vänster). Gemini
+API med modellfallback (`gemini-flash-latest` → `gemini-flash-lite-latest`) +
+**lokal offline-hjärna** med Änglaljus-kunskap (priser, tjänster, bokning,
+avbokning, presentkort) som tar över när API:t inte svarar. Systemprompten har
+en viktig regel: healing ersätter aldrig vård — Selma hänvisar till 1177/112
+vid medicinska frågor.
+
+**API-nyckeln ligger i `js/apikey.js` som är GITIGNORAD.** 2026-07-08 spärrade
+Google den gamla nyckeln ("reported as leaked" — den låg hårdkodad i publika
+GitHub-repon). Ny nyckel: https://aistudio.google.com/apikey → klistra in i
+`js/apikey.js`. Committa den ALDRIG. Utan nyckel kör Selma offline-läge.
+
+## Stämningsljud (Web Audio, ingen ljudfil)
+
+Högtalarknapp i toppraden. Genererar stilla vindspel i realtid: slumpade toner
+ur A-pentatonisk skala (sinus + överton, 4–7 s utklingning, var 2,5–7,5 s) över
+en mjuk bordunton på 110 Hz. Startar endast på klick (autoplay-policy),
+mastervolym 0,12.
+
+## Bokningsmodalen (demo — ingen backend)
+
+Tre steg: tjänst → dag (kommande 7 dagar, `Intl.DateTimeFormat sv-SE`) + tid →
+namn/e-post → bekräftelse. "Boka →" på ett tjänstekort förväljer tjänsten och
+hoppar till steg 2. Bokningar sparas i `localStorage` under
+`lalilatech:bookings`. Stängs med X, overlay-klick eller Esc; scroll låses.
+I skarp drift ersätts detta av **Calendly eller Cal.com**. Nyhetsbrevet är en
+toast-stub — i produktion: Mailchimp/Beehiiv/ConvertKit.
 
 ## Design system
 
@@ -95,5 +127,8 @@ länkklick eller Esc. Scroll låses medan menyn är öppen.
 AI-genererade (Midjourney): änglar, skog, porträtt. Pexels: Tara Winstead
 (8386356, hand i blått ljus — hero-poster/Essential-fallback), Mikhail Nilov
 (7672262 — bakgrund änglakortssektionen). Hero-video: `img/mp4/video (720p).mp4`.
-Oanvända bilder från gamla sidan ligger kvar i `img/png/` (zeus, brothers_grim,
-mango, mask_rose, blahoghusvatten, pngegg-logga).
+Oanvända bilder från gamla sidan är samlade i **`img/oanvanda/`** (zeus,
+brothers_grim, mango, mask_rose, blahoghusvatten, pngegg-logga) — mappen kan
+flyttas eller raderas utan att sidan påverkas. Använda bilder är 31–156 KB
+styck (~550 KB totalt); den tunga filen är hero-videon på 11 MB (komprimera
+med HandBrake till ~3 MB inför skarp publicering).
