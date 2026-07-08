@@ -1,510 +1,588 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sv">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Änglaljus — healing, meditation och medial vägledning. En stilla plats för dig som söker ljus och inre ro."
+    />
+    <meta name="theme-color" content="#330042" />
+    <title>Änglaljus — Vägledning &amp; inre ro</title>
+
+    <!-- Tema + effektläge FÖRE paint — ingen blink -->
+    <script>
+      (function () {
+        var root = document.documentElement;
+        root.classList.add("js");
+
+        var theme = localStorage.getItem("theme");
+        if (!theme) {
+          theme = matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light";
+        }
+        if (theme === "dark") root.setAttribute("data-theme", "dark");
+
+        var perf = localStorage.getItem("lalilatech:perfMode");
+        if (!perf) {
+          root.setAttribute("data-perf-auto", "");
+          var c = navigator.connection || {};
+          if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            perf = "essential";
+          } else if (
+            (navigator.hardwareConcurrency || 8) <= 4 ||
+            (navigator.deviceMemory || 8) <= 4 ||
+            c.saveData ||
+            /^(2g|slow-2g)$/.test(c.effectiveType || "")
+          ) {
+            perf = "balanced";
+          } else {
+            perf = "cinematic";
+          }
+        }
+        root.setAttribute("data-perf", perf);
+      })();
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="style.css" />
-    <title>Outdoor</title>
+    <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
-    <div class="navigation">
-      <input type="checkbox" class="navigation__checkbox" id="navi-toggle" />
+    <!-- ============ TOPPRAD ============ -->
+    <header class="nav" id="nav">
+      <a href="#hero" class="nav__wordmark">ÄNGLALJUS</a>
 
-      <label for="navi-toggle" class="navigation__button">
-        <span class="navigation__icon">&nbsp;</span>
-      </label>
-
-      <div class="navigation__background">&nbsp;</div>
-
-      <nav class="navigation__nav">
-        <ul class="navigation__list">
-          <li class="navigation__item">
-            <a href="#" class="navigation__link"><span>=></span>Om LA-Studio</a>
-          </li>
-          <li class="navigation__item">
-            <a href="#" class="navigation__link"><span>=></span>Kontakt</a>
-          </li>
-          <li class="navigation__item">
-            <a href="#" class="navigation__link"><span>=></span>Programering</a>
-          </li>
-          <li class="navigation__item">
-            <a href="#" class="navigation__link"><span>=></span>Musik</a>
-          </li>
-          <li class="navigation__item">
-            <a href="#" class="navigation__link"><span>=></span>Bilder</a>
-          </li>
-        </ul>
-      </nav>
-    </div>
-
-    <header class="header">
-      <div class="header__logo-box">
-        <img
-          src="img/png/pngegg - 2023-03-18T104858.612.png"
-          alt="Logo"
-          class="header__logo"
-        />
-      </div>
-
-      <div class="header__text-box">
-        <h1 class="heading-primary">
-          <span class="heading-primary--main">LARS ASPLUND</span>
-          <span class="heading-primary--sub">Alla sidor är responsiva</span>
-        </h1>
-
-        <a href="#section-tours" class="btn btn--white btn--animated"
-          >TRYCK PÅ KNAPPEN</a
+      <div class="nav__actions">
+        <button
+          class="theme-toggle"
+          id="theme-toggle"
+          aria-label="Växla mellan ljust och mörkt läge"
         >
+          <svg
+            class="theme-toggle__icon theme-toggle__icon--sun"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            aria-hidden="true"
+          >
+            <circle cx="12" cy="12" r="4" />
+            <path
+              d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
+            />
+          </svg>
+          <svg
+            class="theme-toggle__icon theme-toggle__icon--moon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+          </svg>
+        </button>
+
+        <button
+          class="nav__burger"
+          id="burger"
+          aria-label="Öppna meny"
+          aria-expanded="false"
+          aria-controls="menu"
+        >
+          <span class="nav__burger-line"></span>
+          <span class="nav__burger-line"></span>
+          <span class="nav__burger-line"></span>
+        </button>
       </div>
     </header>
 
+    <!-- ============ FULLSKÄRMSMENY ============ -->
+    <nav class="menu" id="menu" aria-hidden="true">
+      <ul class="menu__list">
+        <li class="menu__item">
+          <a href="#filosofi" class="menu__link"
+            ><span class="menu__num">01</span>Filosofi</a
+          >
+        </li>
+        <li class="menu__item">
+          <a href="#tjanster" class="menu__link"
+            ><span class="menu__num">02</span>Tjänster</a
+          >
+        </li>
+        <li class="menu__item">
+          <a href="#anglakort" class="menu__link"
+            ><span class="menu__num">03</span>Änglakorten</a
+          >
+        </li>
+        <li class="menu__item">
+          <a href="#roster" class="menu__link"
+            ><span class="menu__num">04</span>Röster</a
+          >
+        </li>
+        <li class="menu__item">
+          <a href="#kontakt" class="menu__link"
+            ><span class="menu__num">05</span>Kontakt</a
+          >
+        </li>
+      </ul>
+      <p class="menu__foot">Änglaljus · Vägledning &amp; inre ro</p>
+    </nav>
+
     <main>
-      <section class="section-about">
-        <div class="u-center-text u-margin-bottom-big">
-          <h2 class="heading-secondary">viktiga steg i processen:</h2>
-        </div>
-
-        <div class="row">
-          <div class="col-1-of-2">
-            <h3 class="heading-tertiary u-margin-bottom-small">
-              Kravsamling och Planering
-            </h3>
-            <p class="paragraph">
-              Utveckla en interaktiv prototyp som ger kunden en förhandsvisning
-              av hur hemsidan kommer att se ut och fungera. Implementera
-              designen och lägg till funktionalitet. Se till att hemsidan är
-              sökoptimerad och följer bästa praxis för webbutveckling.
-            </p>
-
-            <h3 class="heading-tertiary u-margin-bottom-small">
-              Utveckling och Implementering
-            </h3>
-            <p class="paragraph">
-              Genomför omfattande tester för att säkerställa att hemsidan
-              fungerar korrekt och är fri från buggar. Det är viktigt att hålla
-              en öppen kommunikation med kunden genom hela processen för att
-              säkerställa att deras vision och behov uppfylls på bästa möjliga
-              sätt.
-            </p>
-
-            <a href="#" class="btn-text">Mer information &rarr;</a>
-          </div>
-          <div class="col-1-of-2">
-            <div class="composition">
-              <img
-                srcset="img/png/helene_female_angel_1767c2ae-d01f-416c-9cf4-0b108a0d1938 (1).jpg"
-                sizes="(max-width: 56.25em) 20vw, (max-width: 37.5em) 30vw, 300px"
-                alt="Photo 1"
-                class="composition__photo composition__photo--p1"
-                src="img/png/angel1.jpg"
-              />
-
-              <img
-                srcset="
-                  img/png/helene_magical_angel_woman_white_0e575e13-bbe1-4118-b45b-17987ab2c8c5.jpg
-                "
-                sizes="(max-width: 56.25em) 20vw, (max-width: 37.5em) 30vw, 300px"
-                alt="Photo 2"
-                class="composition__photo composition__photo--p2"
-                src="img/png/helene_magical_angel_woman_white_0e575e13-bbe1-4118-b45b-17987ab2c8c5.jpg"
-              />
-
-              <img
-                srcset="
-                  img/png/helene_magical_angel_woman_white_4af3a52f-219a-4bd9-bc3c-3e9f7d2e518b.jpg
-                "
-                sizes="(max-width: 56.25em) 20vw, (max-width: 37.5em) 30vw, 300px"
-                alt="Photo 3"
-                class="composition__photo composition__photo--p3"
-                src="img/png/helene_magical_angel_woman_white_4af3a52f-219a-4bd9-bc3c-3e9f7d2e518b.jpg"
-              />
-
-              <!--
-                            <img src="img/nat-1-large.jpg" alt="Photo 1" class="composition__photo composition__photo--p1">
-                            <img src="img/nat-2-large.jpg" alt="Photo 2" class="composition__photo composition__photo--p2">
-                            <img src="img/nat-3-large.jpg" alt="Photo 3" class="composition__photo composition__photo--p3">
-                            -->
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section-features">
-        <div class="row">
-          <div class="col-1-of-4">
-            <div class="feature-box">
-              <i class="feature-box__icon icon-basic-world"></i>
-              <h3 class="heading-tertiary u-margin-bottom-small">
-                Kravsamling:
-              </h3>
-              <p class="feature-box__text">
-                Inled processen genom att samla in krav från kunden. Förstå
-                deras mål, målgrupp och önskad funktionalitet.
-              </p>
-            </div>
-          </div>
-
-          <div class="col-1-of-4">
-            <div class="feature-box">
-              <i class="feature-box__icon icon-basic-compass"></i>
-              <h3 class="heading-tertiary u-margin-bottom-small">Planering:</h3>
-              <p class="feature-box__text">
-                Genomför en noggrann planering där du skissar på strukturen och
-                layouten av hemsidan.
-              </p>
-            </div>
-          </div>
-
-          <div class="col-1-of-4">
-            <div class="feature-box">
-              <i class="feature-box__icon icon-basic-map"></i>
-              <h3 class="heading-tertiary u-margin-bottom-small">Design</h3>
-              <p class="feature-box__text">
-                Skapa en visuell design baserad på de samlade kraven. Fokusera
-                på användarupplevelsen
-              </p>
-            </div>
-          </div>
-
-          <div class="col-1-of-4">
-            <div class="feature-box">
-              <i class="feature-box__icon icon-basic-heart"></i>
-              <h3 class="heading-tertiary u-margin-bottom-small">Utveckling</h3>
-              <p class="feature-box__text">
-                Börja bygga själva hemsidan med hjälp av lämpliga teknologier
-                och verktyg. Implementera designen
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section-tours" id="section-tours">
-        <div class="u-center-text u-margin-bottom-big">
-          <h2 class="heading-secondary">VILKEN ÄR DIN FAVORIT?</h2>
-        </div>
-
-        <div class="row">
-          <div class="col-1-of-3">
-            <div class="card">
-              <div class="card__side card__side--front">
-                <div class="card__picture card__picture--1">&nbsp;</div>
-                <h4 class="card__heading">
-                  <span class="card__heading-span card__heading-span--1"
-                    >SKOGENS STORA LUGN</span
-                  >
-                </h4>
-                <div class="card__details">
-                  <ul>
-                    <li>Solen</li>
-                    <li>Kycklingar</li>
-                    <li>Äggulor</li>
-                    <li>Gammla postbilar</li>
-                    <li>Sand</li>
-                  </ul>
-                </div>
-              </div>
-              <div class="card__side card__side--back card__side--back-1">
-                <div class="card__cta">
-                  <div class="card__price-box">
-                    <p class="card__price-only">färgen är</p>
-                    <p class="card__price-value">GUL</p>
-                  </div>
-                  <a href="#popup" class="btn btn--white">Klicka här!</a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-1-of-3">
-            <div class="card">
-              <div class="card__side card__side--front">
-                <div class="card__picture card__picture--2">&nbsp;</div>
-                <h4 class="card__heading">
-                  <span class="card__heading-span card__heading-span--2"
-                    >GRÖNT ÄR SKÖNT</span
-                  >
-                </h4>
-                <div class="card__details">
-                  <ul>
-                    <li>Gräsmattan</li>
-                    <li>Sköldpaddan</li>
-                    <li>Gräshoppan</li>
-                    <li>Pennor</li>
-                    <li>Sallad</li>
-                  </ul>
-                </div>
-              </div>
-              <div class="card__side card__side--back card__side--back-2">
-                <div class="card__cta">
-                  <div class="card__price-box">
-                    <p class="card__price-only">Färgen är</p>
-                    <p class="card__price-value">GRÖN</p>
-                  </div>
-                  <a href="#popup" class="btn btn--white">Klicla här!</a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-1-of-3">
-            <div class="card">
-              <div class="card__side card__side--front">
-                <div class="card__picture card__picture--3">&nbsp;</div>
-                <h4 class="card__heading">
-                  <span class="card__heading-span card__heading-span--3"
-                    >mANGO ÄR GOTT</span
-                  >
-                </h4>
-                <div class="card__details">
-                  <ul>
-                    <li>Havet</li>
-                    <li>Himelen</li>
-                    <li>Båtar</li>
-                    <li>Håret på vänsterextremister</li>
-                    <li>Böcker</li>
-                  </ul>
-                </div>
-              </div>
-              <div class="card__side card__side--back card__side--back-3">
-                <div class="card__cta">
-                  <div class="card__price-box">
-                    <p class="card__price-only">Lilla fågel</p>
-                    <p class="card__price-value">BLÅ</p>
-                  </div>
-                  <a href="#popup" class="btn btn--white">Klicka nu!</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="u-center-text u-margin-top-huge">
-          <a href="#" class="btn btn--green">Klicka här för mer info</a>
-        </div>
-      </section>
-
-      <section class="section-stories">
-        <div class="bg-video">
-          <video class="bg-video__content" autoplay muted loop>
+      <!-- ============ HERO ============ -->
+      <section class="hero" id="hero">
+        <div class="hero__media">
+          <video
+            class="hero__video"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            poster="img/pexels-tara-winstead-8386356.jpg"
+          >
             <source src="img/mp4/video (720p).mp4" type="video/mp4" />
-            <!-- <source src="img/video.webm" type="video/webm" /> -->
           </video>
+          <div class="hero__scrim"></div>
         </div>
 
-        <div class="u-center-text u-margin-bottom-big">
-          <h2 class="heading-secondary">Vad tycker kunden då?</h2>
-        </div>
-
-        <div class="row">
-          <div class="story">
-            <figure class="story__shape">
-              <img
-                src="img/png/rosa.jpg"
-                alt="Person on a tour"
-                class="story__img"
-              />
-              <figcaption class="story__caption">Rosa Gåsa</figcaption>
-            </figure>
-            <div class="story__text">
-              <h3 class="heading-tertiary u-margin-bottom-small">
-                Det bästa som någonsin hänt mig!
-              </h3>
-              <p>
-                Jag är otroligt nöjd med det arbete som webbyrån har utfört! De
-                har överträffat mina förväntningar på alla sätt. Samarbetet var
-                smidigt och professionellt från början till slut. De lyssnade
-                noggrant på mina önskemål och behov, och resultatet är en
-                fantastisk webbplats som verkligen representerar mitt företag på
-                bästa sätt.
-              </p>
-            </div>
+        <div class="hero__content">
+          <p class="eyebrow eyebrow--light" data-reveal>
+            Vägledning &amp; inre ro
+          </p>
+          <h1 class="hero__title" data-reveal data-reveal-delay="100">
+            Änglaljus
+          </h1>
+          <p class="hero__sub" data-reveal data-reveal-delay="200">
+            Healing, meditation och medial vägledning &mdash; en stilla plats
+            för dig som söker ljus.
+          </p>
+          <div class="hero__cta" data-reveal data-reveal-delay="300">
+            <a href="#filosofi" class="btn btn--light">Utforska</a>
+            <a href="#anglakort" class="btn btn--ghost">Dra ett änglakort</a>
           </div>
         </div>
 
-        <div class="row">
-          <div class="story">
-            <figure class="story__shape">
-              <img
-                src="img/png/vikinggirl.jpg"
-                alt="Person on a tour"
-                class="story__img"
-              />
-              <figcaption class="story__caption">Jack Black</figcaption>
-            </figure>
-            <div class="story__text">
-              <h3 class="heading-tertiary u-margin-bottom-small">
-                Inte illa pinkat!
-              </h3>
-              <p>
-                Designen är modern och användarvänlig, och jag är imponerad av
-                den tekniska kompetensen som har lagts ner. Teamet var även
-                snabba med att svara på frågor och göra justeringar. Jag
-                rekommenderar starkt denna webbyrå till alla som söker
-                högkvalitativa webblösningar. Tack för ett utmärkt arbete!
-              </p>
-            </div>
-          </div>
-        </div>
+        <a href="#filosofi" class="hero__scroll" aria-label="Scrolla ner">
+          <span class="hero__scroll-line"></span>
+        </a>
+      </section>
 
-        <div class="u-center-text u-margin-top-huge">
-          <a href="#" class="btn-text">Läs fler &rarr;</a>
+      <!-- ============ FILOSOFI ============ -->
+      <section class="section filosofi" id="filosofi">
+        <div class="container filosofi__grid">
+          <div class="filosofi__text">
+            <p class="eyebrow" data-reveal>Filosofi</p>
+            <h2 class="heading-2" data-reveal data-reveal-delay="80">
+              Stillheten bär<br />sina egna svar
+            </h2>
+            <p class="lead" data-reveal data-reveal-delay="160">
+              Änglaljus föddes ur en enkel tanke: att alla människor bär på ett
+              inre ljus, och att det ibland behövs en lugn stund &mdash; och en
+              varsam hand &mdash; för att hitta tillbaka till det.
+            </p>
+            <p class="body-text" data-reveal data-reveal-delay="220">
+              Här möts du av healing, guidad meditation och samtal utan
+              prestige. Ingenting är konstigt, ingenting är tvingande. Du
+              kommer som du är, och du tar med dig precis så mycket som känns
+              rätt. Allt sker i din takt, i en miljö som är byggd för vila.
+            </p>
+            <p class="filosofi__signature" data-reveal data-reveal-delay="280">
+              &mdash; Lars, grundare
+            </p>
+          </div>
+
+          <div class="filosofi__collage" data-reveal data-reveal-delay="150">
+            <img
+              src="img/png/angel1.jpg"
+              alt="Ängel med vita vingar, porträtt i dunkelt ljus"
+              class="collage__photo collage__photo--1"
+              loading="lazy"
+            />
+            <img
+              src="img/png/helene_magical_angel_woman_white_0e575e13-bbe1-4118-b45b-17987ab2c8c5.jpg"
+              alt="Ängel i vitt, skulptural gestalt"
+              class="collage__photo collage__photo--2"
+              loading="lazy"
+            />
+            <img
+              src="img/png/helene_magical_angel_woman_white_4af3a52f-219a-4bd9-bc3c-3e9f7d2e518b.jpg"
+              alt="Ängel med ljusa vingar, närbild"
+              class="collage__photo collage__photo--3"
+              loading="lazy"
+            />
+          </div>
         </div>
       </section>
 
-      <section class="section-book">
-        <div class="row">
-          <div class="book">
-            <div class="book__form">
-              <form action="#" class="form">
-                <div class="u-margin-bottom-medium">
-                  <h2 class="heading-secondary">Hör av dig!</h2>
-                </div>
-
-                <div class="form__group">
-                  <input
-                    type="text"
-                    class="form__input"
-                    placeholder="Namn"
-                    id="name"
-                    required
-                  />
-                  <label for="name" class="form__label">Namn</label>
-                </div>
-
-                <div class="form__group">
-                  <input
-                    type="email"
-                    class="form__input"
-                    placeholder="E-post adress"
-                    id="email"
-                    required
-                  />
-                  <label for="email" class="form__label">E-post</label>
-                </div>
-
-                <div class="form__group u-margin-bottom-medium">
-                  <div class="form__radio-group">
-                    <input
-                      type="radio"
-                      class="form__radio-input"
-                      id="small"
-                      name="size"
-                    />
-                    <label for="small" class="form__radio-label">
-                      <span class="form__radio-button"></span>
-                      Vänster
-                    </label>
-                  </div>
-
-                  <div class="form__radio-group">
-                    <input
-                      type="radio"
-                      class="form__radio-input"
-                      id="large"
-                      name="size"
-                    />
-                    <label for="large" class="form__radio-label">
-                      <span class="form__radio-button"></span>
-                      Höger
-                    </label>
-                  </div>
-                </div>
-
-                <div class="form__group">
-                  <button class="btn btn--green">Klicka här! &rarr;</button>
-                </div>
-              </form>
-            </div>
+      <!-- ============ TJÄNSTER ============ -->
+      <section class="section section--tinted" id="tjanster">
+        <div class="container">
+          <div class="section__head">
+            <p class="eyebrow" data-reveal>Tjänster</p>
+            <h2 class="heading-2" data-reveal data-reveal-delay="80">
+              Tre vägar till ro
+            </h2>
           </div>
+
+          <div class="services">
+            <article class="service" data-reveal>
+              <div class="service__media">
+                <img
+                  src="img/png/helene_magical_angel_woman_white_4af3a52f-219a-4bd9-bc3c-3e9f7d2e518b.jpg"
+                  alt="Ängel med ljusa vingar"
+                  loading="lazy"
+                />
+              </div>
+              <div class="service__body">
+                <h3 class="service__title">Änglahealing</h3>
+                <p class="service__text">
+                  En stunds djup avslappning där energi, värme och närvaro får
+                  flöda fritt. Du ligger ner, ombonad och trygg, i 60 minuter.
+                </p>
+                <p class="service__price">Från 650 kr</p>
+              </div>
+            </article>
+
+            <article class="service" data-reveal data-reveal-delay="120">
+              <div class="service__media">
+                <img
+                  src="img/png/helene_png_daylight_for_Forests_of_Sweden_in_the_background_def3c762-df0a-492b-b8dd-478e0fd4e81f.jpg"
+                  alt="Svensk skog i gyllene morgonljus"
+                  loading="lazy"
+                />
+              </div>
+              <div class="service__body">
+                <h3 class="service__title">Meditation &amp; andning</h3>
+                <p class="service__text">
+                  Guidad meditation i liten grupp, med fokus på andning och
+                  närvaro. Naturnära, kravlöst och öppet för nybörjare.
+                </p>
+                <p class="service__price">Från 250 kr</p>
+              </div>
+            </article>
+
+            <article class="service" data-reveal data-reveal-delay="240">
+              <div class="service__media">
+                <img
+                  src="img/pexels-tara-winstead-8386356.jpg"
+                  alt="Hand som sträcks mot ett blått ljus"
+                  loading="lazy"
+                />
+              </div>
+              <div class="service__body">
+                <h3 class="service__title">Medial vägledning</h3>
+                <p class="service__text">
+                  Ett personligt samtal kring dina frågor &mdash; om vägval,
+                  relationer eller det som känns oklart. I lugn och förtrolighet.
+                </p>
+                <p class="service__price">Från 850 kr</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ ÄNGLAKORTEN ============ -->
+      <section class="section anglakort" id="anglakort">
+        <div class="container">
+          <div class="section__head">
+            <p class="eyebrow eyebrow--light" data-reveal>Dagens kort</p>
+            <h2 class="heading-2 heading-2--light" data-reveal data-reveal-delay="80">
+              Dra ett änglakort
+            </h2>
+            <p class="anglakort__intro" data-reveal data-reveal-delay="160">
+              Stanna upp ett ögonblick. Tänk på något du bär med dig just nu
+              &mdash; och vänd det kort som drar i dig.
+            </p>
+          </div>
+
+          <div class="cards" data-reveal data-reveal-delay="200">
+            <button class="angel-card" aria-pressed="false">
+              <span class="angel-card__inner">
+                <span class="angel-card__back">
+                  <span class="angel-card__frame"></span>
+                  <svg
+                    class="angel-card__wing"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M12 21c0-6 2-11 9-14-1 5-3 8-6 9 2 0 4-1 6-2-2 5-6 7-9 7zM12 21c0-6-2-11-9-14 1 5 3 8 6 9-2 0-4-1-6-2 2 5 6 7 9 7z"
+                    />
+                  </svg>
+                  <span class="angel-card__star">&#10022;</span>
+                </span>
+                <span
+                  class="angel-card__front"
+                  style="background-image: url('img/png/angel1.jpg')"
+                >
+                  <span class="angel-card__veil"></span>
+                  <span class="angel-card__word">Frid</span>
+                  <span class="angel-card__message"
+                    >Släpp det som tynger. Du får vila nu &mdash; allt sker i
+                    sin rätta tid.</span
+                  >
+                </span>
+              </span>
+            </button>
+
+            <button class="angel-card" aria-pressed="false">
+              <span class="angel-card__inner">
+                <span class="angel-card__back">
+                  <span class="angel-card__frame"></span>
+                  <svg
+                    class="angel-card__wing"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M12 21c0-6 2-11 9-14-1 5-3 8-6 9 2 0 4-1 6-2-2 5-6 7-9 7zM12 21c0-6-2-11-9-14 1 5 3 8 6 9-2 0-4-1-6-2 2 5 6 7 9 7z"
+                    />
+                  </svg>
+                  <span class="angel-card__star">&#10022;</span>
+                </span>
+                <span
+                  class="angel-card__front"
+                  style="background-image: url('img/png/helene_magical_angel_woman_white_0e575e13-bbe1-4118-b45b-17987ab2c8c5.jpg')"
+                >
+                  <span class="angel-card__veil"></span>
+                  <span class="angel-card__word">Mod</span>
+                  <span class="angel-card__message"
+                    >Ta steget du länge tvekat inför. Du är mer buren än du
+                    tror.</span
+                  >
+                </span>
+              </span>
+            </button>
+
+            <button class="angel-card" aria-pressed="false">
+              <span class="angel-card__inner">
+                <span class="angel-card__back">
+                  <span class="angel-card__frame"></span>
+                  <svg
+                    class="angel-card__wing"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M12 21c0-6 2-11 9-14-1 5-3 8-6 9 2 0 4-1 6-2-2 5-6 7-9 7zM12 21c0-6-2-11-9-14 1 5 3 8 6 9-2 0-4-1-6-2 2 5 6 7 9 7z"
+                    />
+                  </svg>
+                  <span class="angel-card__star">&#10022;</span>
+                </span>
+                <span
+                  class="angel-card__front"
+                  style="background-image: url('img/png/helene_magical_angel_woman_white_4af3a52f-219a-4bd9-bc3c-3e9f7d2e518b.jpg')"
+                >
+                  <span class="angel-card__veil"></span>
+                  <span class="angel-card__word">Hopp</span>
+                  <span class="angel-card__message"
+                    >Ett nytt ljus är på väg in i ditt liv. Håll dörren
+                    öppen.</span
+                  >
+                </span>
+              </span>
+            </button>
+          </div>
+
+          <div class="anglakort__reset-wrap">
+            <button class="btn btn--ghost" id="shuffle" hidden>
+              Blanda om
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ RÖSTER ============ -->
+      <section class="section" id="roster">
+        <div class="container">
+          <div class="section__head">
+            <p class="eyebrow" data-reveal>Röster</p>
+            <h2 class="heading-2" data-reveal data-reveal-delay="80">
+              Ord från besökare
+            </h2>
+          </div>
+
+          <div class="quotes">
+            <figure class="quote" data-reveal>
+              <blockquote class="quote__text">
+                &rdquo;Efter varje session hos Lars känner jag mig som en ny
+                människa. Det är svårt att sätta ord på &mdash; men lugnet
+                sitter i flera dagar.&rdquo;
+              </blockquote>
+              <figcaption class="quote__who">
+                <img
+                  src="img/png/rosa.jpg"
+                  alt="Porträtt av Rosa"
+                  class="quote__avatar"
+                  loading="lazy"
+                />
+                <span>
+                  <span class="quote__name">Rosa G.</span>
+                  <span class="quote__role">Änglahealing, återkommande</span>
+                </span>
+              </figcaption>
+            </figure>
+
+            <figure class="quote" data-reveal data-reveal-delay="150">
+              <blockquote class="quote__text">
+                &rdquo;Jag kom som skeptiker och gick därifrån med något jag
+                inte visste att jag saknade. Meditationerna är nu min fasta
+                punkt i veckan.&rdquo;
+              </blockquote>
+              <figcaption class="quote__who">
+                <img
+                  src="img/png/vikinggirl.jpg"
+                  alt="Porträtt av Freja"
+                  class="quote__avatar"
+                  loading="lazy"
+                />
+                <span>
+                  <span class="quote__name">Freja L.</span>
+                  <span class="quote__role">Meditation &amp; andning</span>
+                </span>
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ KONTAKT ============ -->
+      <section class="section section--tinted" id="kontakt">
+        <div class="container kontakt__grid">
+          <div class="kontakt__text">
+            <p class="eyebrow" data-reveal>Kontakt</p>
+            <h2 class="heading-2" data-reveal data-reveal-delay="80">
+              Hör av dig
+            </h2>
+            <p class="body-text" data-reveal data-reveal-delay="160">
+              Skriv några rader om vad du söker, så återkommer jag inom en dag.
+              Du kan också boka en tid direkt &mdash; första samtalet är alltid
+              kostnadsfritt.
+            </p>
+            <button class="btn btn--dark" id="book-btn" data-reveal data-reveal-delay="220">
+              Boka ett samtal
+            </button>
+          </div>
+
+          <form class="form" id="contact-form" data-reveal data-reveal-delay="150">
+            <div class="form__group">
+              <label for="name" class="form__label">Namn</label>
+              <input
+                type="text"
+                class="form__input"
+                id="name"
+                autocomplete="name"
+                required
+              />
+            </div>
+            <div class="form__group">
+              <label for="email" class="form__label">E-post</label>
+              <input
+                type="email"
+                class="form__input"
+                id="email"
+                autocomplete="email"
+                required
+              />
+            </div>
+            <div class="form__group">
+              <label for="message" class="form__label">Meddelande</label>
+              <textarea
+                class="form__input form__input--area"
+                id="message"
+                rows="4"
+                required
+              ></textarea>
+            </div>
+            <button type="submit" class="btn btn--dark">Skicka</button>
+          </form>
         </div>
       </section>
     </main>
 
+    <!-- ============ FOOTER ============ -->
     <footer class="footer">
-      <div class="footer__logo-box"></div>
-      <div class="row">
-        <div class="col-1-of-2">
-          <div class="footer__navigation">
-            <ul class="footer__list">
-              <li class="footer__item">
-                <a href="#" class="footer__link">Om oss</a>
-              </li>
-              <li class="footer__item">
-                <a href="#" class="footer__link">Kontakt</a>
-              </li>
-              <li class="footer__item">
-                <a href="#" class="footer__link">Jobb</a>
-              </li>
-              <li class="footer__item">
-                <a href="#" class="footer__link">Policy</a>
-              </li>
-              <li class="footer__item">
-                <a href="#" class="footer__link">Villkår</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-1-of-2">
-          <p class="footer__copyright">
-            Kodad av <a href="#" class="footer__link">Lars Asplund</a> för dig.
-            <a href="#" class="footer__link">Bättre kan det inte bli</a>.
-            Copyright &copy; 2023. Lorem ipsum dolor sit amet consectetur
-            adipisicing elit. At, delectus temporibus quisquam doloremque enim
-            dolorum ex ducimus deserunt quod id accusamus eligendi
-          </p>
-        </div>
-      </div>
+      <p class="footer__wordmark">ÄNGLALJUS</p>
+      <ul class="footer__nav">
+        <li><a href="#filosofi" class="footer__link">Filosofi</a></li>
+        <li><a href="#tjanster" class="footer__link">Tjänster</a></li>
+        <li><a href="#anglakort" class="footer__link">Änglakorten</a></li>
+        <li><a href="#kontakt" class="footer__link">Kontakt</a></li>
+      </ul>
+      <p class="footer__legal">
+        &copy; 2026 Änglaljus &middot; Lars Asplund. Sidan är en demo. Bilder:
+        AI-genererade (Midjourney) samt Pexels (Tara Winstead, Mikhail Nilov).
+      </p>
     </footer>
 
-    <div class="popup" id="popup">
-      <div class="popup__content">
-        <div class="popup__left">
-          <!-- <img src="img/nat-8.jpg" alt="Tour photo" class="popup__img" />
-          <img src="img/nat-9.jpg" alt="Tour photo" class="popup__img" /> -->
-          <img
-            src="img/png/helene_vampyre_75987583-3ce2-4728-b9f9-8baa85ab534f.png"
-            alt="Tour photo"
-            class="popup__img"
-          />
-          <img
-            src="img/png/helene_make_a_replica_of_this_0544f0c7-871f-4c8a-8fc8-618c7d37f372.png"
-            alt="Tour photo"
-            class="popup__img"
-          />
-        </div>
-        <div class="popup__right">
-          <a href="#section-tours" class="popup__close">&times;</a>
-          <h2 class="heading-secondary u-margin-bottom-small">
-            Allt du kan drömma om
-          </h2>
-          <h3 class="heading-tertiary u-margin-bottom-small">
-            VIKTIGT &ndash; DU KANSKE ÄNDRAR DITT LIV PERMANENT
-          </h3>
-          <p class="popup__text">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Sed sed
-            risus pretium quam. Aliquam sem et tortor consequat id. Volutpat
-            odio facilisis mauris sit amet massa vitae. Mi bibendum neque
-            egestas congue. Placerat orci nulla pellentesque dignissim enim sit.
-            Vitae semper quis lectus nulla at volutpat diam ut venenatis.
-            Malesuada pellentesque elit eget gravida cum sociis natoque
-            penatibus et. Proin fermentum leo vel orci porta non pulvinar neque
-            laoreet. Gravida neque convallis a cras semper. Molestie at
-            elementum eu facilisis sed odio morbi quis. Faucibus vitae aliquet
-            nec ullamcorper sit amet risus nullam eget. Nam libero justo laoreet
-            sit. Amet massa vitae tortor condimentum lacinia quis vel eros
-            donec. Sit amet facilisis magna etiam. Imperdiet sed euismod nisi
-            porta.
-          </p>
-          <a href="#" class="btn btn--green">Tryck här nu</a>
-        </div>
+    <!-- ============ EFFEKTVÄLJARE ============ -->
+    <div class="perf" id="perf">
+      <button
+        class="perf__toggle"
+        id="perf-toggle"
+        aria-label="Välj effektnivå"
+        aria-expanded="false"
+        aria-controls="perf-popover"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          aria-hidden="true"
+        >
+          <path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3" />
+          <path d="M1 14h6M9 8h6M17 16h6" />
+        </svg>
+      </button>
+      <div class="perf__popover" id="perf-popover" hidden>
+        <p class="perf__title">Effektnivå</p>
+        <button class="perf__option" data-perf-mode="essential">
+          <span class="perf__option-name">Essential</span>
+          <span class="perf__option-desc">Nästan statisk — snabbast</span>
+        </button>
+        <button class="perf__option" data-perf-mode="balanced">
+          <span class="perf__option-name">Balanced</span>
+          <span class="perf__option-desc">Lagom — bra på äldre datorer</span>
+        </button>
+        <button class="perf__option" data-perf-mode="cinematic">
+          <span class="perf__option-name">Cinematic</span>
+          <span class="perf__option-desc">Alla effekter på</span>
+        </button>
       </div>
     </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+    <script src="js/main.js"></script>
   </body>
 </html>
