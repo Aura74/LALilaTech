@@ -165,7 +165,14 @@
     var body = {
       contents: history,
       systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
-      generationConfig: { temperature: 0.8, topP: 0.95, maxOutputTokens: 1024 },
+      generationConfig: {
+        temperature: 0.8,
+        topP: 0.95,
+        maxOutputTokens: 1024,
+        // flash-latest är en "tänkande" modell — utan detta kan den
+        // grubbla i 30+ sekunder under hög belastning
+        thinkingConfig: { thinkingBudget: 0 },
+      },
     };
 
     var attempt = function (idx) {
@@ -173,6 +180,11 @@
         history.pop(); // rulla tillbaka så historiken inte förgiftas
         return Promise.reject(new Error("Alla modeller misslyckades"));
       }
+      // 12 s timeout per modell — annars fastnar vi istället för
+      // att falla vidare i kedjan
+      var ctrl = typeof AbortController === "function" ? new AbortController() : null;
+      var timer = ctrl && setTimeout(function () { ctrl.abort(); }, 12000);
+
       return fetch(geminiUrl(GEMINI_MODELS[idx]), {
         method: "POST",
         headers: {
@@ -180,28 +192,31 @@
           "X-goog-api-key": GEMINI_API_KEY,
         },
         body: JSON.stringify(body),
+        signal: ctrl ? ctrl.signal : undefined,
       })
         .then(function (res) {
           if (!res.ok) throw new Error("HTTP " + res.status);
           return res.json();
         })
         .then(function (data) {
-          var text =
-            (data.candidates &&
-              data.candidates[0] &&
-              data.candidates[0].content &&
-              data.candidates[0].content.parts
-                .map(function (p) {
-                  return p.text || "";
-                })
-                .join("")) ||
-            "Jag kunde inte formulera ett svar just nu.";
+          var cand = data.candidates && data.candidates[0];
+          var parts = (cand && cand.content && cand.content.parts) || [];
+          var text = parts
+            .map(function (p) {
+              return p.text || "";
+            })
+            .join("")
+            .trim();
+          if (!text) throw new Error("Tomt svar");
           history.push({ role: "model", parts: [{ text: text }] });
           if (history.length > 40) history = history.slice(-40);
           return text;
         })
-        .catch(function () {
+        .catch(function (err) {
           return attempt(idx + 1);
+        })
+        .finally(function () {
+          if (timer) clearTimeout(timer);
         });
     };
     return attempt(0);
